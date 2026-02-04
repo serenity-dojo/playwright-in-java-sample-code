@@ -19,4 +19,9 @@ public class ProductList
     public void viewProductDetails(String productName) {
         page.locator(".card").getByText(productName).click();
     }
+
+    public String getSearchCompletedMessage()
+    {
+        return page.getByTestId("no-results").textContent();
+    }
 }

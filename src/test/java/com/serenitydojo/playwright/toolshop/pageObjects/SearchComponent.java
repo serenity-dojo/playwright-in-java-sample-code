@@ -18,4 +18,10 @@ public class SearchComponent
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Search")).click();
         });
     }
+
+    public void clearSearch() {
+        page.waitForResponse("**/products**", () -> {
+            page.getByTestId("search-reset").click();
+        });
+    }
 }

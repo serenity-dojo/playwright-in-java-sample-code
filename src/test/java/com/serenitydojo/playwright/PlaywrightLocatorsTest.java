@@ -17,39 +17,13 @@ import java.util.regex.Pattern;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @Execution(ExecutionMode.SAME_THREAD)
-public class PlaywrightLocatorsTest {
+public class PlaywrightLocatorsTest extends BaseTest {
 
     protected static Playwright playwright;
     protected static Browser browser;
     protected static BrowserContext browserContext;
 
     Page page;
-
-    @BeforeAll
-    static void setUpBrowser() {
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(false)
-                        .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
-        );
-    }
-
-    @BeforeEach
-    void setUp() {
-        browserContext = browser.newContext();
-        page = browserContext.newPage();
-    }
-
-    @AfterEach
-    void closeContext() {
-        browserContext.close();
-    }
-
-    @AfterAll
-    static void tearDown() {
-        browser.close();
-        playwright.close();
-    }
 
     @DisplayName("Locating elements using CSS")
     @Nested

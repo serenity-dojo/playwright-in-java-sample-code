@@ -1,6 +1,7 @@
 package com.serenitydojo.playwright.toolshop.pageObjects;
 
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 
 public class ProductDetails {
 
@@ -21,6 +22,9 @@ public class ProductDetails {
     public void addToCart() {
         page.waitForResponse( response -> response.url().contains("/carts")
                 && response.request().method().equals("POST"),
-                () -> page.getByText("Add to cart").click());
+                () -> {
+                    page.getByText("Add to cart").click();
+                    page.getByRole(AriaRole.ALERT).click();
+                });
     }
 }

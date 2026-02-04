@@ -14,15 +14,19 @@ public class CheckoutCart {
 
     public List<CartLineItem> getLineItems()
     {
-        page.locator("app-cart tbody tr").waitFor();
+        page.locator("app-cart tbody tr").first().waitFor();
         return page.locator("app-cart tbody tr").all()
                 .stream().map(row -> {
-                    String title = row.getByTestId("product-title").innerText();
+                    String title = trimmed(row.getByTestId("product-title").innerText());
                     int quantity = Integer.parseInt(row.getByTestId("product-quantity").inputValue());
                     double price = Double.parseDouble(price(row.getByTestId("product-price").innerText()));
                     double lineTotal = Double.parseDouble(price(row.getByTestId("line-price").innerText()));
                     return new CartLineItem(title, quantity, price, lineTotal);
                 }).toList();
+    }
+
+    private String trimmed(String value) {
+        return value.strip().replaceAll("\u00A0", "");
     }
 
     private String price(String value)
