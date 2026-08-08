@@ -24,10 +24,10 @@ jobs:
           node-version: '20'
 
       # Step 2: Set up JDK 17 (adjust if you're using a different version)
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       # Step 3: Install Maven 3.9.9
@@ -35,9 +35,9 @@ jobs:
         uses: s4u/setup-maven-action@v1.7.0
         with:
           checkout-fetch-depth: 0
-          java-version: 17
+          java-version: 21
           java-distribution: temurin
-          maven-version: 3.9.9
+          maven-version: 3.9.16
 
       # Step 4: Verify Maven installation
       - name: Verify Maven version
@@ -58,3 +58,19 @@ jobs:
       # Step 6: Run Maven to execute Playwright tests
       - name: Run Playwright Tests
         run: mvn verify
+
+      # Step 7: Archive any trace files
+      - name: Archive trace files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces
+          path: target/traces/*.zip
+
+      # Step 8: Deploy Allure report to GitHub Pages
+      - name: Deploy Allure Report to GitHub Pages
+        if: always()  # Ensure this step runs even if tests fail
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: target/site/allure-maven-plugin
