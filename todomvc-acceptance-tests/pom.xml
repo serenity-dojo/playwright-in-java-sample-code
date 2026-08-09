@@ -120,7 +120,7 @@
                             <waitForInterrupt>false</waitForInterrupt>
                             <healthcheckUrl>http://localhost:7002</healthcheckUrl>
                             <arguments>
-                                <argument>npm</argument>
+                                <argument>npm.cmd</argument>
                                 <argument>run</argument>
                                 <argument>serve</argument>
                             </arguments>
