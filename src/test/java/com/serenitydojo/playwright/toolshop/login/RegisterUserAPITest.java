@@ -94,4 +94,28 @@ public class RegisterUserAPITest {
         });
     }
 
+
+    @Test
+    void should_not_register_user() {
+        User invalidUser = User.randomUserWithNullField("firstName");
+
+        var response = request.post("/users/register",
+                RequestOptions.create()
+                        .setHeader("Content-Type", "application/json")
+                        .setData(invalidUser)
+        );
+
+        String responseBody = response.text();
+//        User createdUser = gson.fromJson(responseBody, User.class);
+        assertSoftly(softly -> {
+            softly.assertThat(responseBody).isEqualTo("{\"first_name\":[\"The first name field is required.\"]}")
+                            .as("First name field is required");
+            softly.assertThat(response.status()).isEqualTo(422);
+        });
+
+
+        JsonObject responseObject = gson.fromJson(responseBody, JsonObject.class);
+        System.out.println(responseObject);
+    }
+
 }

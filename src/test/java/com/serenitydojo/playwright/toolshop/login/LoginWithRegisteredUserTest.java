@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LoginWithRegisteredUserTest extends PlaywrightTestCase {
+public class  LoginWithRegisteredUserTest extends PlaywrightTestCase {
 
     @Test
     @DisplayName("Should be able to login with a registered user")

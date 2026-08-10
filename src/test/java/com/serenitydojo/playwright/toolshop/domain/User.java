@@ -54,4 +54,72 @@ public record User(
         return new User(first_name,last_name,address,phone,dob,password,email);
     }
 
+    public static User randomUserWithNullField(String fieldName) {
+
+        User user = randomUser();
+
+        switch (fieldName.toLowerCase()) {
+
+            case "firstname":
+                return new User(
+                        null,
+                        user.last_name(),
+                        user.address(),
+                        user.phone(),
+                        user.dob(),
+                        user.password(),
+                        user.email()
+                );
+
+            case "lastname":
+                return new User(
+                        user.first_name(),
+                        null,
+                        user.address(),
+                        user.phone(),
+                        user.dob(),
+                        user.password(),
+                        user.email()
+                );
+
+            case "phone":
+                return new User(
+                        user.first_name(),
+                        user.last_name(),
+                        user.address(),
+                        null,
+                        user.dob(),
+                        user.password(),
+                        user.email()
+                );
+
+            case "email":
+                return new User(
+                        user.first_name(),
+                        user.last_name(),
+                        user.address(),
+                        user.phone(),
+                        user.dob(),
+                        user.password(),
+                        null
+                );
+
+            case "password":
+                return new User(
+                        user.first_name(),
+                        user.last_name(),
+                        user.address(),
+                        user.phone(),
+                        user.dob(),
+                        null,
+                        user.email()
+                );
+
+            default:
+                throw new IllegalArgumentException(
+                        "Unknown field: " + fieldName
+                );
+        }
+    }
+
 }
